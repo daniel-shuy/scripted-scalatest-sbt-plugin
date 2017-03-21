@@ -1,0 +1,15 @@
+sbtPlugin := true
+
+organization := "com.github.daniel-shuy"
+
+name := "sbt-scripted-test"
+
+version := "0.1.0-SNAPSHOT"
+
+licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
+
+homepage := Some(url("https://github.com/daniel-shuy/sbt-scripted-test"))
+
+libraryDependencies ++= Seq(
+  "org.scalatest" %% "scalatest" % "3.0.1"
+)
