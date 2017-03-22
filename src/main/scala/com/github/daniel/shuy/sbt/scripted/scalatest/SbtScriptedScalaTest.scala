@@ -15,7 +15,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
     lazy val scriptedScalaTestDurations: SettingKey[Boolean] = SettingKey("scripted-scalatest-durations", "If false, will not display durations of tests.")
     lazy val scriptedScalaTestStacks: SettingKey[ScriptedTestStacks] = SettingKey("scripted-scalatest-stacks", "Length of stack traces to print.")
     lazy val scriptedScalaTestStats: SettingKey[Boolean] = SettingKey("scripted-scalatest-stats", "If false, will not display various statistics of tests.")
-    lazy val scriptedScalaTestSpec: TaskKey[Suite] = TaskKey("scripted-scalatest-spec", "The ScalaTest Spec.")
+    lazy val scriptedScalaTestSpec: TaskKey[Suite with ScriptedScalaTestSuiteMixin] = TaskKey("scripted-scalatest-spec", "The ScalaTest Spec.")
     lazy val scriptedScalaTest: TaskKey[Unit] = TaskKey("scripted-scalatest", "Executes all ScalaTest tests for SBT plugin.")
   }
   import autoImport._
