@@ -30,6 +30,8 @@ object SbtScriptedScalaTest extends AutoPlugin {
     scriptedScalaTestStacks := NoStacks,
     scriptedScalaTestStats := true,
 
+    scriptedScalaTestSpec := None,
+
     scriptedScalaTest := {
       // do nothing if not configured
       scriptedScalaTestSpec.value match {
