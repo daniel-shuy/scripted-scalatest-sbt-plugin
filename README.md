@@ -11,6 +11,9 @@ This plugin leverages ScalaTest's powerful assertion system (to automatically pr
 
 This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalatest.org/user_guide/selecting_a_style), including [AsyncTestSuites](http://www.scalatest.org/user_guide/async_testing).
 
+## Note
+When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. That is because calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
+
 ## Installation
 
 Since the plugin hasn't been published, you will have to checkout and build the project yourself:
@@ -50,20 +53,22 @@ See [Settings](#settings) below.
 
 ## Settings
 
-| Setting                      | Type                                           | Description                                                                                                                                                                                                                     |
-| ---------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scripted-scalatest-spec      | Option[Suite with ScriptedScalaTestSuiteMixin] | __Required__. The ScalaTest Suite/Spec.                                                                                                                                                                                         |
-| scripted-scalatest-durations | Boolean                                        | __Optional__. If `true`, displays durations of tests. Defaults to `true`.                                                                                                                                                       |
-| scripted-scalatest-stacks    | NoStacks / ShortStacks / FullStacks            | __Optional__. The length of stack traces to display for failed tests. `NoStacks` will not display any stack traces. `ShortStacks` displays short stack traces. `FullStacks` displays full stack traces. Defaults to `NoStacks`. |
-| scripted-scalatest-stats     | Boolean                                        | __Optional__. If `true`, displays various statistics of tests. Defaults to `true`.                                                                                                                                              |
+| Setting                    | Type                                           | Description                                                                                                                                                                                                                     |
+| -------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| scriptedScalaTestSpec      | Option[Suite with ScriptedScalaTestSuiteMixin] | __Required__. The ScalaTest Suite/Spec. Create an anonymous class of a ScalaTest Suite/Spec (eg. `WordSpec`), then mixin `ScriptedScalaTestSuiteMixin`.                                                                         |
+| scriptedScalaTestDurations | Boolean                                        | __Optional__. If `true`, displays durations of tests. Defaults to `true`.                                                                                                                                                       |
+| scriptedScalaTestStacks    | NoStacks / ShortStacks / FullStacks            | __Optional__. The length of stack traces to display for failed tests. `NoStacks` will not display any stack traces. `ShortStacks` displays short stack traces. `FullStacks` displays full stack traces. Defaults to `NoStacks`. |
+| scriptedScalaTestStats     | Boolean                                        | __Optional__. If `true`, displays various statistics of tests. Defaults to `true`.                                                                                                                                              |
 
 ## Tasks
 
 | Task               | Description                                                                                                                                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scripted-scalatest | Executes all test configured in `scripted-scalatest-spec`. This task must be [configured for scripted-plugin to run in the `test` script file](https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin/new/master?readme=1#user-content-step-4-configure-test-script). |
+| scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin/new/master?readme=1#user-content-step-4-configure-test-script). |
 
 ## Roadmap
+
+I would like to create test cases for this plugin, ideally eventually using this plugin itself. Unfortunately, I just can't seem to figure out how to convert `scripted` from an `InputKey` into a `TaskKey` so that I can execute it with `Project.runTask`. I keep getting errors no matter what arguments I pass into `scripted.toTask`. I'll be really grateful if anyone can point me in the right direction.
 
 When SBT 1.0.x is released, it should be possible to automatically generate the `test` script file, removing the need for [Step 4](#step-4-configure-test-script).
 
