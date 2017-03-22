@@ -50,18 +50,18 @@ See [Settings](#settings) below.
 
 ## Settings
 
-| Setting                      | Type                                           | Description                                                                                                                                                                                                                     |
-| ---------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scripted-scalatest-spec      | Option[Suite with ScriptedScalaTestSuiteMixin] | __Required__. The ScalaTest Suite/Spec.                                                                                                                                                                                         |
-| scripted-scalatest-durations | Boolean                                        | __Optional__. If `true`, displays durations of tests. Defaults to `true`.                                                                                                                                                       |
-| scripted-scalatest-stacks    | NoStacks / ShortStacks / FullStacks            | __Optional__. The length of stack traces to display for failed tests. `NoStacks` will not display any stack traces. `ShortStacks` displays short stack traces. `FullStacks` displays full stack traces. Defaults to `NoStacks`. |
-| scripted-scalatest-stats     | Boolean                                        | __Optional__. If `true`, displays various statistics of tests. Defaults to `true`.                                                                                                                                              |
+| Setting                    | Type                                           | Description                                                                                                                                                                                                                     |
+| -------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| scriptedScalaTestSpec      | Option[Suite with ScriptedScalaTestSuiteMixin] | __Required__. The ScalaTest Suite/Spec.                                                                                                                                                                                         |
+| scriptedScalaTestDurations | Boolean                                        | __Optional__. If `true`, displays durations of tests. Defaults to `true`.                                                                                                                                                       |
+| scriptedScalaTestStacks    | NoStacks / ShortStacks / FullStacks            | __Optional__. The length of stack traces to display for failed tests. `NoStacks` will not display any stack traces. `ShortStacks` displays short stack traces. `FullStacks` displays full stack traces. Defaults to `NoStacks`. |
+| scriptedScalaTestStats     | Boolean                                        | __Optional__. If `true`, displays various statistics of tests. Defaults to `true`.                                                                                                                                              |
 
 ## Tasks
 
 | Task               | Description                                                                                                                                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scripted-scalatest | Executes all test configured in `scripted-scalatest-spec`. This task must be [configured for scripted-plugin to run in the `test` script file](https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin/new/master?readme=1#user-content-step-4-configure-test-script). |
+| scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin/new/master?readme=1#user-content-step-4-configure-test-script). |
 
 ## Roadmap
 
