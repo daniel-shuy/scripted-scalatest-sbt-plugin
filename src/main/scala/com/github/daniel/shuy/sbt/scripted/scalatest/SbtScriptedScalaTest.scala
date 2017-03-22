@@ -1,7 +1,8 @@
 package com.github.daniel.shuy.sbt.scripted.scalatest
 
 import org.scalatest.Suite
-import sbt.{AutoPlugin, PluginTrigger, Setting, SettingKey, TaskKey}
+import sbt.Keys.streams
+import sbt.{AutoPlugin, Def, Logger, PluginTrigger, Setting, SettingKey, TaskKey}
 
 object SbtScriptedScalaTest extends AutoPlugin {
   override def trigger: PluginTrigger = allRequirements
@@ -20,6 +21,10 @@ object SbtScriptedScalaTest extends AutoPlugin {
   }
   import autoImport._
 
+  private[this] lazy val logger = Def.task[Logger] {
+    streams.value.log
+  }
+
   override def projectSettings: Seq[Setting[_]] = Seq(
     scriptedScalaTestDurations := true,
     scriptedScalaTestStacks := NoStacks,
@@ -36,6 +41,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
             fullstacks = stacks.fullstacks,
             stats = scriptedScalaTestStats.value
           )
+        case None => logger.value.warn(s"${scriptedScalaTestSpec.key.label} not configured, no tests will be run...")
       }
     }
   )
