@@ -68,6 +68,8 @@ See [Settings](#settings) below.
 
 ## Roadmap
 
+I would like to create test cases for this plugin, ideally eventually using this plugin itself. Unfortunately, I just can't seem to figure out how to convert `scripted` from an `InputKey` into a `TaskKey` so that I can execute it with `Project.runTask`. I keep getting errors no matter what arguments I pass into `scripted.toTask`. I'll be really grateful if anyone can point me in the right direction.
+
 When SBT 1.0.x is released, it should be possible to automatically generate the `test` script file, removing the need for [Step 4](#step-4-configure-test-script).
 
 ## Licence
