@@ -11,6 +11,9 @@ This plugin leverages ScalaTest's powerful assertion system (to automatically pr
 
 This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalatest.org/user_guide/selecting_a_style), including [AsyncTestSuites](http://www.scalatest.org/user_guide/async_testing).
 
+## Note
+When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. That is because calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
+
 ## Installation
 
 Since the plugin hasn't been published, you will have to checkout and build the project yourself:
