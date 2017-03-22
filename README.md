@@ -65,7 +65,7 @@ See [Settings](#settings) below.
 
 ## Roadmap
 
-When SBT 1.0.x is released, it should be possible to automatically generate the `test` script file.
+When SBT 1.0.x is released, it should be possible to automatically generate the `test` script file, removing the need for [Step 4](#step-4-configure-test-script).
 
 ## Licence
 
