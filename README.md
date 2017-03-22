@@ -46,7 +46,7 @@ Put __only__ the following in the `test` script file:
 
 ### Step 5: Configure project settings for the plugin
 
-See [Settings](##settings) below.
+See [Settings](#settings) below.
 
 ## Settings
 
