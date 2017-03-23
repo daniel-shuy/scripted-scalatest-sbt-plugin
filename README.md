@@ -14,12 +14,6 @@ This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalat
 ## Note
 When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. That is because calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
 
-## Installation
-
-Since the plugin hasn't been published, you will have to checkout and build the project yourself:
-1. Clone/Checkout Repository: `git clone https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin.git`
-2. Build and publish the JAR file to your local Ivy cache: `sbt publishLocal`
-
 ## Usage
 
 ### Step 1: Include the scripted-plugin in your build
@@ -38,7 +32,7 @@ See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+3%3A+src%2F
 
 Add the following to your `sbt-test/<test-group>/<test-name>/project/plugins.sbt`:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "0.1.0-SNAPSHOT")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "0.1.0")
 ```
 
 ### Step 4: Configure `test` script
