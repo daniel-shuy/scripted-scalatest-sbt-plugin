@@ -45,7 +45,22 @@ Put __only__ the following in the `test` script file:
 
 ### Step 5: Configure project settings for the plugin
 
-See [Settings](#settings) below.
+See [Settings](#settings).
+
+Example:
+```scala
+scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
+  override val sbtState: State = state.value
+    
+  "my-task" should {
+    "do something" in {
+      Project.runTask(myTask, state.value)
+      // ...
+      // assert(...)
+    }
+  }
+})
+```
 
 ### Step 6: Use the scripted-plugin as usual
 
