@@ -22,6 +22,8 @@ When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` in
 
 See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin
 
+If you are using [sbt-cross-building](https://github.com/jrudolph/sbt-cross-building), don't add scripted-plugin to `project/scripted.sbt`, and replace `ScriptedPlugin.scriptedSettings` in `scripted.sbt` with `CrossBuilding.scriptedSettings`.
+
 ### Step 2: Create the test subproject
 
 Create the test subproject in `sbt-test/<test-group>/<test-name>`.
