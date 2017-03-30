@@ -49,7 +49,7 @@ Put __only__ the following in the `test` script file:
 
 See [Settings](#settings).
 
-In `scriptedScalaTestSpec`, override `sbtState` in `ScriptedScalaTestSuiteMixin` with `state.value`.
+Create a new ScalaTest Suite/Spec, mixin `ScriptedScalaTestSuiteMixin` and pass it into `scriptedScalaTestSpec`. When mixing in `ScriptedScalaTestSuiteMixin`, implement `sbtState` as `state.value`.
 
 Example:
 ```scala
