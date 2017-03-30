@@ -11,7 +11,7 @@ This plugin leverages ScalaTest's powerful assertion system (to automatically pr
 
 This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalatest.org/user_guide/selecting_a_style), including [AsyncTestSuites](http://www.scalatest.org/user_guide/async_testing).
 
-__Warning__: Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin. Since the tests share the same project folder, running them in parallel may cause unpredictable issues.
+__Warning__: Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin, unless you are absolutely sure your tests have no side effects.
 
 ## Note
 When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. That is because calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
@@ -48,6 +48,8 @@ Put __only__ the following in the `test` script file:
 ### Step 5: Configure project settings for the plugin
 
 See [Settings](#settings).
+
+In `scriptedScalaTestSpec`, override `sbtState` in `ScriptedScalaTestSuiteMixin` with `state.value`.
 
 Example:
 ```scala
