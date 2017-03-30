@@ -47,8 +47,6 @@ Put __only__ the following in the `test` script file:
 
 ### Step 5: Configure project settings for the plugin
 
-See [Settings](#settings).
-
 Create a new ScalaTest Suite/Spec, mixin `ScriptedScalaTestSuiteMixin` and pass it into `scriptedScalaTestSpec`. When mixing in `ScriptedScalaTestSuiteMixin`, implement `sbtState` as `state.value`.
 
 Example:
@@ -65,6 +63,8 @@ scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
   }
 })
 ```
+
+See [Settings](#settings) for other configurable settings.
 
 ### Step 6: Use the scripted-plugin as usual
 
