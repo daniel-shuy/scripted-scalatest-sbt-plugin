@@ -55,7 +55,13 @@ scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
   override val sbtState: State = state.value
     
   "my-task" should {
-    "do something" in {
+    "do A" in {
+      Project.runTask(myTask, state.value)
+      // ...
+      // assert(...)
+    }
+    
+    "do B" in {
       Project.runTask(myTask, state.value)
       // ...
       // assert(...)
