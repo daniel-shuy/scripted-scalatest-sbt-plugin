@@ -10,10 +10,6 @@ licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/lice
 
 homepage := Some(url("https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin"))
 
-publishMavenStyle := false
-
-bintrayRepository := "sbt-plugins"
-
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.1"
 )
