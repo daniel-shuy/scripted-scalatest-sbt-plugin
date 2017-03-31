@@ -11,7 +11,7 @@ This plugin leverages ScalaTest's powerful assertion system (to automatically pr
 
 This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalatest.org/user_guide/selecting_a_style), including [AsyncTestSuites](http://www.scalatest.org/user_guide/async_testing).
 
-__Warning__: Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin. Since the tests share the same project folder, running them in parallel may cause unpredictable issues.
+__Warning__: Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin, unless you are absolutely sure your tests have no side effects.
 
 ## Note
 When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. That is because calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
@@ -21,6 +21,8 @@ When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` in
 ### Step 1: Include the scripted-plugin in your build
 
 See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin
+
+If you are using [sbt-cross-building](https://github.com/jrudolph/sbt-cross-building), don't add scripted-plugin to `project/scripted.sbt`, and replace `ScriptedPlugin.scriptedSettings` in `scripted.sbt` with `CrossBuilding.scriptedSettings`.
 
 ### Step 2: Create the test subproject
 
@@ -45,7 +47,7 @@ Put __only__ the following in the `test` script file:
 
 ### Step 5: Configure project settings for the plugin
 
-See [Settings](#settings).
+Create a new ScalaTest Suite/Spec, mixin `ScriptedScalaTestSuiteMixin` and pass it into `scriptedScalaTestSpec`. When mixing in `ScriptedScalaTestSuiteMixin`, implement `sbtState` as `state.value`.
 
 Example:
 ```scala
@@ -53,7 +55,13 @@ scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
   override val sbtState: State = state.value
     
   "my-task" should {
-    "do something" in {
+    "do A" in {
+      Project.runTask(myTask, state.value)
+      // ...
+      // assert(...)
+    }
+    
+    "do B" in {
       Project.runTask(myTask, state.value)
       // ...
       // assert(...)
@@ -61,6 +69,8 @@ scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
   }
 })
 ```
+
+See [Settings](#settings) for other configurable settings.
 
 ### Step 6: Use the scripted-plugin as usual
 
@@ -80,6 +90,10 @@ Eg. Run `sbt scripted` on the main project to execute all tests.
 | Task               | Description                                                                                                                                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin/new/master?readme=1#user-content-step-4-configure-test-script). |
+
+## Known Issues
+
+Currently, mixing in `BeforeAndAfter` into your ScalaTest Suite/Spec and implementing `before` will cause errors. This will be fixed in future versions.
 
 ## Roadmap
 
