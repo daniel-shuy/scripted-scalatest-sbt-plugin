@@ -2,7 +2,7 @@ package com.github.daniel.shuy.sbt.scripted.scalatest
 
 import org.scalatest.Suite
 import sbt.Keys.streams
-import sbt.{AutoPlugin, Def, Logger, PluginTrigger, Setting, SettingKey, TaskKey}
+import sbt._
 
 object SbtScriptedScalaTest extends AutoPlugin {
   override def trigger: PluginTrigger = allRequirements
