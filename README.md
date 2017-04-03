@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade)
+
 # scripted-scalatest-sbt-plugin
 A SBT plugin to use [ScalaTest](http://www.scalatest.org/) with scripted-plugin to test your SBT plugins
 
