@@ -92,7 +92,7 @@ Eg. Run `sbt scripted` on the main project to execute all tests.
 
 | Task               | Description                                                                                                                                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin/new/master?readme=1#user-content-step-4-configure-test-script). |
+| scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](#step-4-configure-test-script). |
 
 ## Known Issues
 
