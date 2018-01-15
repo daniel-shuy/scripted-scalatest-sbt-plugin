@@ -44,7 +44,7 @@ addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "0.1.0")
 
 ### Step 4: Configure `test` script
 
-Put __only__ the following in the `test` script file:
+Put __only__ the following in the `sbt-test/<test-group>/<test-name>/test` script file:
 
 `> scripted-scalatest`
 
