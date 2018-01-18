@@ -4,8 +4,7 @@
 
 | Plugin Version | SBT Version         | ScalaTest Version |
 | -------------- | ------------------- | ----------------- |
-| 0.1.X          | 0.13.X              | 3.X.X             |
-| 0.2.X          | 0.13.X, 1.X.X       | 3.X.X             |
+| 1.0.X          | 0.13.X, 1.X.X       | 3.X.X             |
 
 A SBT plugin to use [ScalaTest](http://www.scalatest.org/) with scripted-plugin to test your SBT plugins
 
@@ -19,9 +18,20 @@ This plugin leverages ScalaTest's powerful assertion system (to automatically pr
 
 This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalatest.org/user_guide/selecting_a_style), including [AsyncTestSuites](http://www.scalatest.org/user_guide/async_testing).
 
-## Note
+## Notes
 - Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin. `ScriptedScalaTestSuiteMixin` runs `sbt clean` before each test, which may cause weird side effects when run in parallel.
 - When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. Calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
+- When implementing [BeforeAndAfterEach](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.BeforeAndAfterEach)'s `beforeEach`, make sure to invoke `super.beforeEach` in a `try` block, then put your implementation in the `finally` clause:
+```scala
+override protected def beforeEach(): Unit = {
+  try {
+    super.beforeEach()
+  }
+  finally {
+    // ...
+  }
+}
+```
 
 ## Usage
 
@@ -71,7 +81,7 @@ See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+3%3A+src%2F
 
 Add the following to your `sbt-test/<test-group>/<test-name>/project/plugins.sbt`:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "0.2.0")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.0.0")
 ```
 
 ### Step 5: Configure `test` script
@@ -163,10 +173,6 @@ Eg. Run `sbt scripted` on the main project to execute all tests.
 | Task               | Description                                                                                                                                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](#step-5-configure-test-script). |
-
-## Known Issues
-
-Currently, mixing in `BeforeAndAfter` into your ScalaTest Suite/Spec and implementing `before` will cause errors. This will be fixed in future versions.
 
 ## Roadmap
 
