@@ -4,7 +4,7 @@ organization := "com.github.daniel-shuy"
 
 name := "sbt-scripted-scalatest"
 
-version := "0.2.0"
+version := "1.0.0"
 
 licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
