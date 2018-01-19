@@ -110,7 +110,7 @@ lazy val root = (project in file("."))
 
       "assembly" should {
         "create a JAR that prints out 'hello'" in {
-          Project.runTask(Keys.assembly, state.value)
+          Project.runTask(Keys.assembly, sbtState)
           val process = sbt.Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
           val out = (process!!)
           assert(out.trim == "bye")
