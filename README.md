@@ -94,62 +94,33 @@ Put __only__ the following in the `sbt-test/<test-group>/<test-name>/test` scrip
 
 In `sbt-test/<test-group>/<test-name>/build.sbt`, create a new ScalaTest Suite/Spec, mixin `ScriptedScalaTestSuiteMixin` and pass it into `scriptedScalaTestSpec`. When mixing in `ScriptedScalaTestSuiteMixin`, implement `sbtState` as `state.value`.
 
-Example:
+Using SBT's Example in http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+6%3A+custom+assertion:
 ```scala
 import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
 import org.scalatest.WordSpec
 
-scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
-  override val sbtState: State = state.value
+lazy val root = (project in file("."))
+  .settings(
+    version := "0.1",
+    scalaVersion := "2.10.6",
+    assemblyJarName in assembly := "foo.jar",
 
-  "my-task" should {
-    "do A" in {
-      Project.runTask(myTask, state.value)
-      // ...
-      // assert(...)
-    }
+    scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
+      override val sbtState: State = state.value
 
-    "do B" in {
-      Project.runTask(myTask, state.value)
-      // ...
-      // assert(...)
+      "assembly" should {
+        "create a JAR that prints out 'hello'" in {
+          Project.runTask(Keys.assembly, state.value)
+          val process = sbt.Process("java", Seq("-jar", (crossTarget.value / "foo.jar").toString))
+          val out = (process!!)
+          assert(out.trim == "bye")
+        }
+      }
     }
-  }
-})
+  )
 ```
 
-Another alternative is to move the ScalaTest Suite/Spec into another file (the file must reside within the `project` folder) and instantiate it in your `build.sbt` instead. Add a constructor argument that takes in a `sbt.State`, then implement `sbtState` as that constructor argument. Pass `state.value` into the constructor when instantiating the ScalaTest Suite/Spec.
-
-Example:
-```scala
-// project/ExampleSpec.scala
-import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
-import org.scalatest.WordSpec
-import sbt.State
-
-class ExampleSpec(state: State) extends WordSpec with ScriptedScalaTestSuiteMixin {
-  override val sbtState: State = state
-
-  "my-task" should {
-    "do A" in {
-      Project.runTask(myTask, state.value)
-      // ...
-      // assert(...)
-    }
-
-    "do B" in {
-      Project.runTask(myTask, state.value)
-      // ...
-      // assert(...)
-    }
-  }
-}
-```
-
-```scala
-// build.sbt
-scriptedScalaTestSpec := Some(new ExampleSpec(state.value))
-```
+It is possible move the ScalaTest Suite/Spec into a separate `.scala` file in the `project` folder, however that may cause issues when trying to access SBT `SettingKey`s or declaring custom `TaskKey`s, therefore is currently not recommended except for extremely simple tests. A better approach would be to move all configurations related to this plugin to a new `.sbt` file, eg. `test.sbt`.
 
 See [Settings](#settings) for other configurable settings.
 
