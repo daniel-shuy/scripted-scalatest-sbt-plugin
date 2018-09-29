@@ -176,7 +176,7 @@ I would like to create test cases for this plugin, ideally eventually using this
 
 ## Licence
 
-Copyright 2017 Daniel Shuy
+Copyright 2017, 2018 Daniel Shuy
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
