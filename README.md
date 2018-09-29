@@ -2,9 +2,9 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&utm_medium=referral&utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&utm_campaign=badger)
 
-| Plugin Version | SBT Version         | ScalaTest Version |
-| -------------- | ------------------- | ----------------- |
-| 1.0.X          | 0.13.X, 1.X.X       | 3.X.X             |
+| Plugin Version | SBT Version                 | ScalaTest Version |
+| -------------- | --------------------------- | ----------------- |
+| 1.0.x          | 0.13.x, 1.0.x, 1.x.x, 1.2.x | 3.x.x             |
 
 A SBT plugin to use [ScalaTest](http://www.scalatest.org/) with scripted-plugin to test your SBT plugins
 
@@ -38,9 +38,23 @@ override protected def beforeEach(): Unit = {
 ### Step 1: Include the scripted-plugin in your build
 
 Add the following to your main project's `project/scripted.sbt` (create file it if doesn't exist):
+
+#### SBT 0.13 (http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin)
+
 ```scala
 libraryDependencies += { "org.scala-sbt" % "scripted-plugin" % sbtVersion.value }
 ```
+
+#### SBT 1.0.x-1.1.x
+
+```scala
+libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value }
+```
+Note the %% operator.
+
+#### SBT 1.2.x
+
+Not Required
 
 ### Step 2: Configure scripted-plugin
 
@@ -59,10 +73,21 @@ scriptedBufferLog := false
 
 If you are using [sbt-cross-building](https://github.com/jrudolph/sbt-cross-building) (SBT < 0.13.6), don't add scripted-plugin to `project/scripted.sbt`, and replace `ScriptedPlugin.scriptedSettings` in `build.sbt` with `CrossBuilding.scriptedSettings`.
 
-#### SBT 1.X (http://www.scala-sbt.org/1.x/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin)
+#### SBT 1.0.x-1.1.x
 
 ```scala
 // build.sbt
+scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+  Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+}
+scriptedBufferLog := false
+```
+
+#### SBT 1.2.x (http://www.scala-sbt.org/1.x/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin)
+
+```scala
+// build.sbt
+enablePlugins(SbtPlugin)
 scriptedLaunchOpts := { scriptedLaunchOpts.value ++
   Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
 }
