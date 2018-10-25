@@ -1,9 +1,9 @@
 package com.github.daniel.shuy.sbt.scripted.scalatest
 
-import org.scalatest.{BeforeAndAfterEach, Suite}
+import org.scalatest._
 import sbt.{Keys, Project, State}
 
-trait ScriptedScalaTestSuiteMixin extends BeforeAndAfterEach {
+trait ScriptedScalaTestSuiteMixin extends ScriptedScalaTestSuite with BeforeAndAfterEach {
   this: Suite =>
 
   val sbtState: State
