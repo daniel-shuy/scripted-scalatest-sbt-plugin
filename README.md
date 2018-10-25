@@ -1,5 +1,6 @@
 # scripted-scalatest-sbt-plugin
 
+[ ![Download](https://api.bintray.com/packages/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/images/download.svg) ](https://bintray.com/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&utm_medium=referral&utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&utm_campaign=badger)
 
 | Plugin Version | SBT Version                 | ScalaTest Version |
