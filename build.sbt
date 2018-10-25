@@ -4,7 +4,7 @@ organization := "com.github.daniel-shuy"
 
 name := "sbt-scripted-scalatest"
 
-version := "1.0.0"
+version := "1.1.0-SNAPSHOT"
 
 licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
@@ -16,5 +16,5 @@ crossSbtVersions := Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.4"
+  "org.scalatest" %% "scalatest" % "3.0.5"
 )

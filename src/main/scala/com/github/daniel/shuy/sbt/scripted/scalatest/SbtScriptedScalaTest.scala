@@ -37,12 +37,16 @@ object SbtScriptedScalaTest extends AutoPlugin {
       scriptedScalaTestSpec.value match {
         case Some(suite) =>
           val stacks = scriptedScalaTestStacks.value
-          suite.execute(
+          val status = suite.executeScripted(
             durations = scriptedScalaTestDurations.value,
             shortstacks = stacks.shortstacks,
             fullstacks = stacks.fullstacks,
             stats = scriptedScalaTestStats.value
           )
+          status.waitUntilCompleted()
+          if (!status.succeeds()) {
+            sys.error(s"Scripted ScalaTest suite failed!")
+          }
         case None => logger.value.warn(s"${scriptedScalaTestSpec.key.label} not configured, no tests will be run...")
       }
     }
