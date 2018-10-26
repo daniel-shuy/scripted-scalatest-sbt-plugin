@@ -21,7 +21,7 @@ trait ScriptedScalaTestSuite extends Suite {
     * @return [[org.scalatest.FailedStatus]] on error,
     *        else the return from [[org.scalatest.Suite.run(Option[String],org.scalatest.Args)]].
     */
-  def executeScripted(testName: String = null,
+  final def executeScripted(testName: String = null,
                       configMap: ConfigMap = ConfigMap.empty,
                       color: Boolean = true,
                       durations: Boolean = false,
