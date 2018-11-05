@@ -132,6 +132,7 @@ In `sbt-test/<test-group>/<test-name>/build.sbt`, create a new ScalaTest Suite/S
 Using SBT's Example in http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+6%3A+custom+assertion:
 ```scala
 import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
+import org.scalatest.Assertions._
 import org.scalatest.WordSpec
 
 lazy val root = (project in file("."))
