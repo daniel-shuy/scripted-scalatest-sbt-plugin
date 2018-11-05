@@ -89,7 +89,7 @@ lazy val root = (project in file("."))
   )
 ```
 
-#### SBT 1.2.x (http://www.scala-sbt.org/1.x/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin)
+#### SBT 1.2.x+ (http://www.scala-sbt.org/1.x/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin)
 
 ```scala
 // build.sbt
