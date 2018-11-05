@@ -3,9 +3,9 @@
 [ ![Download](https://api.bintray.com/packages/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/images/download.svg) ](https://bintray.com/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/_latestVersion)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&utm_medium=referral&utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&utm_campaign=badger)
 
-| Plugin Version | SBT Version                 | ScalaTest Version |
-| -------------- | --------------------------- | ----------------- |
-| 1.0.x          | 0.13.x, 1.0.x, 1.x.x, 1.2.x | 3.x.x             |
+| Plugin Version | SBT Version   | ScalaTest Version |
+| -------------- | ------------- | ----------------- |
+| 1.0.x          | 0.13.x, 1.x.x | 3.x.x             |
 
 A SBT plugin to use [ScalaTest](http://www.scalatest.org/) with scripted-plugin to test your SBT plugins
 
@@ -53,7 +53,7 @@ libraryDependencies += { "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value
 ```
 Note the %% operator.
 
-#### SBT 1.2.x
+#### SBT 1.2.x+
 
 Not Required
 
@@ -78,21 +78,30 @@ If you are using [sbt-cross-building](https://github.com/jrudolph/sbt-cross-buil
 
 ```scala
 // build.sbt
-scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-  Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
-}
-scriptedBufferLog := false
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something",
+    scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+      Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+    },
+    scriptedBufferLog := false
+  )
 ```
 
 #### SBT 1.2.x (http://www.scala-sbt.org/1.x/docs/Testing-sbt-plugins.html#step+2%3A+scripted-plugin)
 
 ```scala
 // build.sbt
-enablePlugins(SbtPlugin)
-scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-  Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
-}
-scriptedBufferLog := false
+lazy val root = (project in file("."))
+  .enablePlugins(SbtPlugin)
+  .settings(
+    name := "sbt-something",
+    scriptedLaunchOpts := { scriptedLaunchOpts.value ++
+      Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+    },
+    scriptedBufferLog := false
+  )
 ```
 
 ### Step 3: Create the test subproject
