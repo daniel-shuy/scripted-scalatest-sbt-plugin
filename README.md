@@ -181,10 +181,6 @@ Eg. Run `sbt scripted` on the main project to execute all tests.
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](#step-5-configure-test-script). |
 
-## Roadmap
-
-I would like to create test cases for this plugin, ideally eventually using this plugin itself. Unfortunately, I just can't seem to figure out how to convert `scripted` from an `InputKey` into a `TaskKey` so that I can execute it with `Project.runTask`. I keep getting errors no matter what arguments I pass into `scripted.toTask`. I'll be really grateful if anyone can point me in the right direction.
-
 ## Licence
 
 Copyright 2017, 2018 Daniel Shuy
