@@ -5,7 +5,7 @@
 
 | Plugin Version | SBT Version   | ScalaTest Version |
 | -------------- | ------------- | ----------------- |
-| 1.0.x          | 0.13.x, 1.x.x | 3.x.x             |
+| 1.x.x          | 0.13.x, 1.x.x | 3.x.x             |
 
 A SBT plugin to use [ScalaTest](http://www.scalatest.org/) with scripted-plugin to test your SBT plugins
 
@@ -115,7 +115,7 @@ See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+3%3A+src%2F
 
 Add the following to your `sbt-test/<test-group>/<test-name>/project/plugins.sbt`:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.0.0")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
 ```
 
 ### Step 5: Configure `test` script
