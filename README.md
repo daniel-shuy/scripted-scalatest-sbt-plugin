@@ -79,7 +79,6 @@ If you are using [sbt-cross-building](https://github.com/jrudolph/sbt-cross-buil
 ```scala
 // build.sbt
 lazy val root = (project in file("."))
-  .enablePlugins(SbtPlugin)
   .settings(
     name := "sbt-something",
     scriptedLaunchOpts := { scriptedLaunchOpts.value ++
