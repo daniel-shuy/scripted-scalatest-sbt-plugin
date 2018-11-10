@@ -4,6 +4,7 @@ releaseProcess := Seq[ReleaseStep](
   inquireVersions,
   runClean,
   releaseStepCommandAndRemaining("^ test"),
+  releaseStepCommandAndRemaining("^ publishLocal"),
   releaseStepCommandAndRemaining("^ scripted"),
   setReleaseVersion,
   commitReleaseVersion,
