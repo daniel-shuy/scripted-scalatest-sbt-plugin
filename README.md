@@ -33,6 +33,7 @@ override protected def beforeEach(): Unit = {
   }
 }
 ```
+- `scripted-scalatest-sbt-plugin` is now tested using itself!
 
 ## Usage
 
