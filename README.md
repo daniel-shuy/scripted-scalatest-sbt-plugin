@@ -183,9 +183,9 @@ Eg. Run `sbt scripted` on the main project to execute all tests.
 
 ## Tasks
 
-| Task               | Description                                                                                                                                                                                                                                                                 |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| scripted-scalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](#step-5-configure-test-script). |
+| Task              | Description                                                                                                                                                                                                                                                                 |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| scriptedScalatest | Executes all test configured in `scriptedScalaTestSpec`. This task must be [configured for scripted-plugin to run in the `test` script file](#step-5-configure-test-script). |
 
 ## Licence
 
