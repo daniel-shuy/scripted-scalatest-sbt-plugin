@@ -119,6 +119,12 @@ Add the following to your `sbt-test/<test-group>/<test-name>/project/plugins.sbt
 addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
 ```
 
+Override the `scalatest` dependency version with the version of ScalaTest you wish to use:
+```scala
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5"
+```
+
 ### Step 5: Configure `test` script
 
 Put __only__ the following in the `sbt-test/<test-group>/<test-name>/test` script file:
