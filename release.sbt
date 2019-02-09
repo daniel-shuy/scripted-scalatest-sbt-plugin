@@ -4,6 +4,7 @@ releaseProcess := Seq[ReleaseStep](
   inquireVersions,
   runClean,
   releaseStepCommandAndRemaining("^ test"),
+  // When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
   releaseStepCommandAndRemaining("^ publishLocal"),
   releaseStepCommandAndRemaining("^ scripted"),
   setReleaseVersion,
