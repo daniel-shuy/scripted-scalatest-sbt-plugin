@@ -2,10 +2,10 @@
 
 [ ![Download](https://api.bintray.com/packages/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/images/download.svg) ](https://bintray.com/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/_latestVersion)
 
-| Branch  | Codacy |
-| ------- | ------ |
-| Master  | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b?branch=master)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade) |
-| Develop | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b?branch=develop)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade) |
+| Branch  | Travis CI | Codacy |
+| ------- | --------- | ------ |
+| Master  | [![Build Status](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin.svg?branch=master)](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b?branch=master)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade) |
+| Develop | [![Build Status](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin.svg?branch=develop)](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b?branch=develop)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade) |
 
 | Plugin Version | SBT Version   | ScalaTest Version |
 | -------------- | ------------- | ----------------- |
