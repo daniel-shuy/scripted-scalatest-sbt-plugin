@@ -26,15 +26,11 @@ This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalat
 ## Notes
 - Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin. `ScriptedScalaTestSuiteMixin` runs `sbt clean` before each test, which may cause weird side effects when run in parallel.
 - When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. Calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
-- When implementing [BeforeAndAfterEach](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.BeforeAndAfterEach)'s `beforeEach`, make sure to invoke `super.beforeEach` in a `try` block, then put your implementation in the `finally` clause:
+- When implementing [BeforeAndAfterEach](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.BeforeAndAfterEach)'s `beforeEach`, make sure to invoke `super.beforeEach` afterwards:
 ```scala
 override protected def beforeEach(): Unit = {
-  try {
-    super.beforeEach()
-  }
-  finally {
-    // ...
-  }
+  // ...
+  super.beforeEach() // To be stackable, must call super.beforeEach
 }
 ```
 - This SBT plugin is now tested using itself!
