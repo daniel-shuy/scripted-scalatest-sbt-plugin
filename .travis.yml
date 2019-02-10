@@ -1,4 +1,4 @@
-# See https://www.scala-sbt.org/1.0/docs/Travis-CI-with-sbt.html
+# See https://www.scala-sbt.org/1.x/docs/Travis-CI-with-sbt.html
 
 # Use container-based infrastructure
 sudo: false
