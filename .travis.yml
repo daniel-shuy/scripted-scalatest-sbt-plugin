@@ -8,6 +8,36 @@ language: scala
 # Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
 dist: trusty
 
+before_install:
+  # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-manual-installation)
+  - wget --no-check-certificate -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh
+  - sudo bash gitflow-installer.sh install stable
+
+install:
+  - git checkout -qf $TRAVIS_BRANCH
+
+jobs:
+  include:
+    - name: test
+      if: (NOT branch =~ /^release\/.*$/)
+      # When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
+      script: sbt "^ publishLocal" "^ scripted"
+    - name: bintray release
+      if: (branch =~ /^release\/.*$/)
+      env:
+        - BINTRAY_USER=daniel-shuy
+        # BINTRAY_PASS
+        - secure: loPa3bG2SegT/rePSaIAH9nm282w26YaRHQxkJG0xTocfFjgFQ61Lz2hwbZcJIymkv6xj0o0+r3IDJVrKdYMvy+hEon/CdpoEpbEGbyu3WD3jk9dBZ4OREU6Xu2/+1+qpoFKz5xLuLaev8LD/7cIKbXjpOkmvinp1UCtIc6zjeLFzJoNcG+8QX2D56xt7BFKJIPam9D+qHK7KqVa4hVTiXbjYtBeitYb1mQfwceWxnyJVz9QoHSqMbp8MxKu+PJ0YBUy96oat7FyfoBFM4Bd6chHJjcN9oeC2iWnr5CCLRnSkd7cE5/vm6o2uZBDc/XK62JuD1yboF0pkONJRXTCi6QKYmItB2ix+Pdc1gY86dds7uC4i8eHTT75NGjcq9HbFx/3BvTC/5hX6MAmpOqNd2U6ExVqMyZIirKlVo3l35qho+fC+L8SgSGsa6z+CW1vXVp928CjNDOVGKED+Cf/uCrXF5VmB7cxGZrixqYKCabYj/MiUq+wcZO4oChUUbCKOS49YzDJ29q701iPR/SN5155l5zNiZ9br85xqThWImU7wdrUk52PIw6zR5UTxjPgmfAFzbtSNQil1Eh6Dw6XWghsZdV7/62mvcW983aJtjJixDMsCZJaq+oYKfOsVFLLO0mwasZEUFhSS1HG+m9TvzANFiDEQDmAa/b2H/J65HU=
+        # GH_TOKEN
+        - secure: miDFPDDbjsg7j9cQqNdquW8Lsqo8LW3DEK5y2V3ljo9KA12Yqfbch2ZMCmo2IR8xp2g3dajT8b6tJ7qqEglUwXbFFk0vV3rGEL8OOTiEw7DcxQc1koggMXCqwGyM34WERXI5LkjveVg2cSvg+uGsEUdH1+9j6wbp0A+ilifhtUuckD6ZXOOb7SGLSNDm9kl28oXnlaxSc7hJVDfoF1hnJpA3xlNEb3fqmpGFV0BG8TaS4b2+7Qc6BIZTa/DgYVMvw9jcNIVGIFbY4UG3jnekyhEimhZ6v7QQH8/r/IG/L+fr/pLqub9ZhEar4iEuMIwi4vc+kykMGLMjF41W88qV5j+iF3+qD5+cQRGiP9sAwt0QUMF6cGhLxs0rVV2RVVKNjr+k3UfyrxJBeyo25bUbVGSLOIP3lZCPe9lLzIUa/VhxxMCNuOtHdF2XSSTfFELbTmFpkLCBysUpDDjzTws7LqtBaVSUqQ/klVdmgZXELjY6RLoUxOBzvXYSAog0ZTJEZBdSF5pDcYGoHFq4lMGvcB/o9DVX5cns90xQm+VpkKGVyRSYCe0VVEmhw4rxcDdNFCVYhHGa+QaYrbcx4kZ46w59h2Y9fhdxOR41q+ygWgMhBPXaPqM03Nsoee9KyZhlw1vjFN23/RZTlZY3qH3ySgcqzgcY2Oi11YSKedSu2Ck=
+        # Extract release version from branch name
+        - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed -r 's/^release\/(.*)$/\1/'`
+        - GIT_MERGE_AUTOEDIT=no
+      before_script: git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
+      script: sbt "^ release release-version $RELEASE_VERSION with-defaults"
+      # --message option is required to suppress editor prompt
+      after_success: git flow release finish --showcommands --push --message 'Release'
+
 # These directories are cached to S3 at the end of the build
 cache:
   directories:
@@ -19,7 +49,3 @@ before_cache:
   - rm -fv $HOME/.ivy2/.sbt.ivy.lock
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
   - find $HOME/.sbt        -name "*.lock"               -print -delete
-
-script:
-  # When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
-  - sbt "^ publishLocal" "^ scripted"
