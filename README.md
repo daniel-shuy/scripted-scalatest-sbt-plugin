@@ -116,12 +116,12 @@ See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+3%3A+src%2F
 
 Add the following to your `sbt-test/<test-group>/<test-name>/project/plugins.sbt`:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.1")
 ```
 
 Override the `scalatest` dependency version with the version of ScalaTest you wish to use:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.1")
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5"
 ```
 
