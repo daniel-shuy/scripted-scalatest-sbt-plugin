@@ -2,6 +2,8 @@ import ReleaseTransformations._
 
 releaseIgnoreUntrackedFiles := true
 
+releaseCommitMessage := s"[ci skip] ${releaseCommitMessage.value}"
+
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
