@@ -8,14 +8,6 @@ language: scala
 # Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
 dist: trusty
 
-before_install:
-  # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-manual-installation)
-  - wget --no-check-certificate -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh
-  - sudo bash gitflow-installer.sh install stable
-
-install:
-  - git checkout -qf $TRAVIS_BRANCH
-
 jobs:
   include:
     - name: test
@@ -33,6 +25,12 @@ jobs:
         # Extract release version from branch name
         - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed -r 's/^release\/(.*)$/\1/'`
         - GIT_MERGE_AUTOEDIT=no
+      before_install:
+        # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-manual-installation)
+        - wget --no-check-certificate -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh
+        - sudo bash gitflow-installer.sh install stable
+      install:
+        - git checkout -qf $TRAVIS_BRANCH
       before_script: git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
       script: sbt "^ release release-version $RELEASE_VERSION with-defaults"
       # --message option is required to suppress editor prompt
