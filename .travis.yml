@@ -30,6 +30,7 @@ jobs:
         - wget --no-check-certificate -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh
         - sudo bash gitflow-installer.sh install stable
       install:
+        - git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
         - git remote set-branches --add origin master
         - git remote set-branches --add origin develop
         - git fetch origin
@@ -38,7 +39,6 @@ jobs:
         - git checkout --force $TRAVIS_BRANCH
         - git config gitflow.prefix.release release/
         - git flow init --defaults
-      before_script: git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
       script: sbt "^ release release-version $RELEASE_VERSION with-defaults"
       # --message option is required to suppress editor prompt
       after_success: git flow release finish --showcommands --push --message 'Release'
