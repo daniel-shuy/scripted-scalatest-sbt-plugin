@@ -23,7 +23,7 @@ jobs:
         # GH_TOKEN
         - secure: Twz0WAfQAaj0F0Em6tLYg5uJm8xgVAhtqiIRgrFk0bpyG+ekWuZdb4BVou4MeyHLhZYJ4fLb74Uhd3wltqTFQOem9VftcnxCDTlzVXL/4FvH817/L+cGqFJ5hm1IlvaibDy3eFSpxAJPukdeEEbaQgexFf5PX2pmofnC9hzO/RObFA3ApHG/9Yiuq6gxp0nCGlwU1iuzMmqsVZ1ntfWexAvJgj6mXVZV4yd+ef9qJnn5WWqu5s6oHYpX9kc6BITFdiBZeIrQFL+q3bW9kMMfRh22c4/qpIerxe0GkmrtGXw0ZODG2m74AUG7j6dtyi6o2hW8pAy09lhtROYVb0B1+uo9dShGM94SZy9YwT/75ffvdKiclyrBe+DKs2hU8N7x0KLfgqnW7C8a2eoweXwdYCtjL/qFvWELAPsAYGXoxoP7PsQkzUR4aPlaLORVO72nBQOGFXb/fJGkXOW6RHMGwhZngXIAMY3QzoTsKBv+7vSAcdq+sz4IO2J/0ej1ItRRD5sis7Y1Q4nT8o/yejP2RVBn+PSF8Rmgx1tQcVecxvhzPSibBJoMPs/ixtocC8X1nKLaLfkndpEVeiCuDbZ6hyP6z+EwdqB/mgy+exIscbhgFHX25xBULpjawmuw3dcSGTV8hGSVf8LSgcl+4ssffoejalNnUQcbDF7MT3WTae0=
         # Extract release version from branch name
-        - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed -r 's/^release\/(.*)$/\1/'`
+        - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed --regexp-extended 's/^release\/(.*)$/\1/'`
         - GIT_MERGE_AUTOEDIT=no
       before_install:
         # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-manual-installation)
