@@ -2,6 +2,7 @@ import ReleaseTransformations._
 
 releaseIgnoreUntrackedFiles := true
 
+// skip Travis CI build
 releaseCommitMessage := s"[ci skip] ${releaseCommitMessage.value}"
 
 releaseProcess := Seq[ReleaseStep](
