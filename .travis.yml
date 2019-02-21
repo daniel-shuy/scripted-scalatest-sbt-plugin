@@ -26,9 +26,11 @@ jobs:
         - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed --regexp-extended 's/^release\/(.*)$/\1/'`
         - GIT_MERGE_AUTOEDIT=no
       before_install:
-        # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-manual-installation)
-        - wget --no-check-certificate -q  https://raw.githubusercontent.com/petervanderdoes/gitflow-avh/develop/contrib/gitflow-installer.sh
-        - sudo bash gitflow-installer.sh install stable
+        # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-ubuntu)
+        - sudo add-apt-repository --yes ppa:pdoes/gitflow-avh
+        # use add-apt-repository --update in Ubuntu 17+ (Artful)
+        - sudo apt-get update
+        - sudo apt-get --yes install git-flow
       install:
         - git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
         - git remote set-branches --add origin master
