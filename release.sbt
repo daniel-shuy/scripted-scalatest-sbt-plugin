@@ -1,4 +1,9 @@
 import ReleaseTransformations._
+
+releaseIgnoreUntrackedFiles := true
+
+releaseCommitMessage := s"[ci skip] ${releaseCommitMessage.value}"
+
 releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
@@ -9,7 +14,8 @@ releaseProcess := Seq[ReleaseStep](
   releaseStepCommandAndRemaining("^ scripted"),
   setReleaseVersion,
   commitReleaseVersion,
-  tagRelease,
+  // don't tag, leave it to git flow
+  // tagRelease,
   releaseStepCommandAndRemaining("^ publish"),
   releaseStepTask(bintrayRelease),
   setNextVersion,
