@@ -39,7 +39,7 @@ jobs:
         - git checkout --force $TRAVIS_BRANCH
         - git config gitflow.prefix.release release/
         - git flow init --defaults
-      script: sbt "^ release release-version $RELEASE_VERSION with-defaults"
+      script: sbt "release release-version $RELEASE_VERSION with-defaults"
       # --message option is required to suppress editor prompt
       after_success: git flow release finish --showcommands --push --message 'Release'
 
