@@ -1,7 +1,11 @@
 # scripted-scalatest-sbt-plugin
 
 [ ![Download](https://api.bintray.com/packages/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/images/download.svg) ](https://bintray.com/daniel-shuy/sbt-plugins/sbt-scripted-scalatest/_latestVersion)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&utm_medium=referral&utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&utm_campaign=badger)
+
+| Branch  | Travis CI | Codacy |
+| ------- | --------- | ------ |
+| Master  | [![Build Status](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin.svg?branch=master)](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b?branch=master)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade) |
+| Develop | [![Build Status](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin.svg?branch=develop)](https://travis-ci.org/daniel-shuy/scripted-scalatest-sbt-plugin) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/244276b4573e4ae899443fa79c34822b?branch=develop)](https://www.codacy.com/app/daniel-shuy/scripted-scalatest-sbt-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-shuy/scripted-scalatest-sbt-plugin&amp;utm_campaign=Badge_Grade) |
 
 | Plugin Version | SBT Version   | ScalaTest Version |
 | -------------- | ------------- | ----------------- |
@@ -22,15 +26,11 @@ This plugin allows you to use any of ScalaTest's test [Suites](http://www.scalat
 ## Notes
 - Do not use ScalaTest's [ParallelTestExecution](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.ParallelTestExecution) mixin with this plugin. `ScriptedScalaTestSuiteMixin` runs `sbt clean` before each test, which may cause weird side effects when run in parallel.
 - When executing SBT tasks in tests, use `Project.runTask(<task>, state.value)` instead of `<task>.value`. Calling `<task>.value` declares it as a dependency, which executes before the tests, not when the line is called.
-- When implementing [BeforeAndAfterEach](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.BeforeAndAfterEach)'s `beforeEach`, make sure to invoke `super.beforeEach` in a `try` block, then put your implementation in the `finally` clause:
+- When implementing [BeforeAndAfterEach](http://doc.scalatest.org/3.0.0/index.html#org.scalatest.BeforeAndAfterEach)'s `beforeEach`, make sure to invoke `super.beforeEach` afterwards:
 ```scala
 override protected def beforeEach(): Unit = {
-  try {
-    super.beforeEach()
-  }
-  finally {
-    // ...
-  }
+  // ...
+  super.beforeEach() // To be stackable, must call super.beforeEach
 }
 ```
 - This SBT plugin is now tested using itself!
@@ -116,12 +116,12 @@ See http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.html#step+3%3A+src%2F
 
 Add the following to your `sbt-test/<test-group>/<test-name>/project/plugins.sbt`:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.1")
 ```
 
 Override the `scalatest` dependency version with the version of ScalaTest you wish to use:
 ```scala
-addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.0")
+addSbtPlugin("com.github.daniel-shuy" % "sbt-scripted-scalatest" % "1.1.1")
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5"
 ```
 
@@ -189,7 +189,7 @@ Eg. Run `sbt scripted` on the main project to execute all tests.
 
 ## Licence
 
-Copyright 2017, 2018 Daniel Shuy
+Copyright 2017, 2018, 2019 Daniel Shuy
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

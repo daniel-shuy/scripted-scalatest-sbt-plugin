@@ -10,11 +10,7 @@ trait ScriptedScalaTestSuiteMixin extends ScriptedScalaTestSuite with BeforeAndA
 
   // run Clean before each test to restore project to a clean slate
   override protected def beforeEach(): Unit = {
-    try {
-      super.beforeEach()
-    }
-    finally {
-      Project.runTask(Keys.clean, sbtState)
-    }
+    Project.runTask(Keys.clean, sbtState)
+    super.beforeEach() // To be stackable, must call super.beforeEach
   }
 }

@@ -1,7 +1,49 @@
+# See https://www.scala-sbt.org/1.x/docs/Travis-CI-with-sbt.html
+
 # Use container-based infrastructure
 sudo: false
 
 language: scala
+
+# Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
+dist: trusty
+
+jobs:
+  include:
+    - name: test
+      if: (NOT branch =~ /^release\/.*$/)
+      # When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
+      script: sbt "^ publishLocal" "^ scripted"
+    - name: release
+      if: (branch =~ /^release\/.*$/)
+      env:
+        - BINTRAY_USER=daniel-shuy
+        # BINTRAY_PASS
+        - secure: KgOgPWelim4ySIKAe24WsRGicwcHzqEADql8flUXDyq21aQ+cz0eYkeg/jjkP7jGwHIfBnYNvnhKw/Diiea9X50tHngRTOlRUGpO948yDpTyVCtlRig9A71BafSdi/Ps6P0sPUaC76SKOWY+Zk1WmwMozebgXiY2hjCuE68jnq5xbOydFqfamHRke49AwZuxZPJ2+CCxCB03Hla8Kbd0XcFLp+ZhurPSURZc9/iB/CFz3kI47Tvv3R6Dl9Jjej8jNl//reIt75rSW0yVMk7YElkXZUr3F42r/4/eo4IrQW0gwBD44YOdIYZL+iOqD+Xpng0qlY0XXZ9B0KHLutMv2gYtkRcwNH6wtRoP2xOFaqbuBdWQpVd6E/aj0iPHzEQUb0EDyw0E731XEFzL1d8KxUgXn9eZj4qGB274XfShA3t4VE6eqq77ORJIMRmg0nwjLUhvx78RZqnZ+z1GUFmEjyIk3bGs07N9O0xD4w8dq6yXF3oxtIH1l3QznHA4XgV+fiz7ckOQJKSjRuRpvSllea2okf/vkZ0Wp5f9/16LzWznuKamqABwVaNvbOHbgkzInK8Nm8WN/52nZdmB3+Y18OQ6dN/thHjzsgYdZMHeUSCT1exnAhTmBujUN7LSXWHHtn9LW4qZw81xNLCEHH6ZxXVt6A8nBnYYhg9/9a7EobQ=
+        # GH_TOKEN
+        - secure: Twz0WAfQAaj0F0Em6tLYg5uJm8xgVAhtqiIRgrFk0bpyG+ekWuZdb4BVou4MeyHLhZYJ4fLb74Uhd3wltqTFQOem9VftcnxCDTlzVXL/4FvH817/L+cGqFJ5hm1IlvaibDy3eFSpxAJPukdeEEbaQgexFf5PX2pmofnC9hzO/RObFA3ApHG/9Yiuq6gxp0nCGlwU1iuzMmqsVZ1ntfWexAvJgj6mXVZV4yd+ef9qJnn5WWqu5s6oHYpX9kc6BITFdiBZeIrQFL+q3bW9kMMfRh22c4/qpIerxe0GkmrtGXw0ZODG2m74AUG7j6dtyi6o2hW8pAy09lhtROYVb0B1+uo9dShGM94SZy9YwT/75ffvdKiclyrBe+DKs2hU8N7x0KLfgqnW7C8a2eoweXwdYCtjL/qFvWELAPsAYGXoxoP7PsQkzUR4aPlaLORVO72nBQOGFXb/fJGkXOW6RHMGwhZngXIAMY3QzoTsKBv+7vSAcdq+sz4IO2J/0ej1ItRRD5sis7Y1Q4nT8o/yejP2RVBn+PSF8Rmgx1tQcVecxvhzPSibBJoMPs/ixtocC8X1nKLaLfkndpEVeiCuDbZ6hyP6z+EwdqB/mgy+exIscbhgFHX25xBULpjawmuw3dcSGTV8hGSVf8LSgcl+4ssffoejalNnUQcbDF7MT3WTae0=
+        # Extract release version from branch name
+        - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed --regexp-extended 's/^release\/(.*)$/\1/'`
+        - GIT_MERGE_AUTOEDIT=no
+      before_install:
+        # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-ubuntu)
+        - sudo add-apt-repository --yes ppa:pdoes/gitflow-avh
+        # use add-apt-repository --update in Ubuntu 17+ (Artful)
+        - sudo apt-get update
+        - sudo apt-get --yes install git-flow
+      install:
+        - git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
+        - git remote set-branches --add origin master
+        - git remote set-branches --add origin develop
+        - git fetch origin
+        - git checkout --force -b master --track origin/master
+        - git checkout --force -b develop --track origin/develop
+        - git checkout --force $TRAVIS_BRANCH
+        - git config gitflow.prefix.release release/
+        - git flow init --defaults
+      script: sbt "release release-version $RELEASE_VERSION with-defaults"
+      # --message option is required to suppress editor prompt
+      after_success: git flow release finish --showcommands --push --message 'Release'
 
 # These directories are cached to S3 at the end of the build
 cache:
@@ -11,9 +53,6 @@ cache:
 
 before_cache:
   # Cleanup the cached directories to avoid unnecessary cache updates
+  - rm -fv $HOME/.ivy2/.sbt.ivy.lock
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
   - find $HOME/.sbt        -name "*.lock"               -print -delete
-
-script:
-  # When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
-  - sbt "^ publishLocal" "^ scripted"
