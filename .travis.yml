@@ -5,8 +5,8 @@ sudo: false
 
 language: scala
 
-# Ubuntu Xenial (https://docs.travis-ci.com/user/reference/xenial/)
-dist: xenial
+# Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
+dist: trusty
 
 jobs:
   include:
