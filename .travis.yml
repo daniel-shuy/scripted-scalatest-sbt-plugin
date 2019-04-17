@@ -8,6 +8,9 @@ language: scala
 # Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
 dist: trusty
 
+# https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html#running-versus-compiling
+jdk: openjdk8
+
 jobs:
   include:
     - name: test
