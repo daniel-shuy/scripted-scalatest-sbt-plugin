@@ -9,7 +9,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
 
   sealed abstract class ScriptedTestStacks(
       val shortstacks: Boolean,
-      val fullstacks: Boolean,
+      val fullstacks: Boolean
   )
   case object NoStacks extends ScriptedTestStacks(false, false)
   case object ShortStacks extends ScriptedTestStacks(true, false)
@@ -18,23 +18,23 @@ object SbtScriptedScalaTest extends AutoPlugin {
   object autoImport {
     lazy val scriptedScalaTestDurations: SettingKey[Boolean] = SettingKey(
       "scripted-scalatest-durations",
-      "If false, will not display durations of tests.",
+      "If false, will not display durations of tests."
     )
     lazy val scriptedScalaTestStacks: SettingKey[ScriptedTestStacks] =
       SettingKey(
         "scripted-scalatest-stacks",
-        "Length of stack traces to print.",
+        "Length of stack traces to print."
       )
     lazy val scriptedScalaTestStats: SettingKey[Boolean] = SettingKey(
       "scripted-scalatest-stats",
-      "If false, will not display various statistics of tests.",
+      "If false, will not display various statistics of tests."
     )
     lazy val scriptedScalaTestSpec
         : TaskKey[Option[Suite with ScriptedScalaTestSuiteMixin]] =
       TaskKey("scripted-scalatest-spec", "The ScalaTest Spec.")
     lazy val scriptedScalaTest: TaskKey[Unit] = TaskKey(
       "scripted-scalatest",
-      "Executes all ScalaTest tests for SBT plugin.",
+      "Executes all ScalaTest tests for SBT plugin."
     )
   }
   import autoImport._
@@ -57,7 +57,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
             durations = scriptedScalaTestDurations.value,
             shortstacks = stacks.shortstacks,
             fullstacks = stacks.fullstacks,
-            stats = scriptedScalaTestStats.value,
+            stats = scriptedScalaTestStats.value
           )
           status.waitUntilCompleted()
           if (!status.succeeds()) {
@@ -65,9 +65,9 @@ object SbtScriptedScalaTest extends AutoPlugin {
           }
         case None =>
           logger.value.warn(
-            s"${scriptedScalaTestSpec.key.label} not configured, no tests will be run...",
+            s"${scriptedScalaTestSpec.key.label} not configured, no tests will be run..."
           )
       }
-    },
+    }
   )
 }

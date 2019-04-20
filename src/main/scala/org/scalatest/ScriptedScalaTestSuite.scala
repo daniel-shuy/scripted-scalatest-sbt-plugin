@@ -6,7 +6,7 @@ import org.scalatest.Suite.{
   formatterForSuiteAborted,
   formatterForSuiteCompleted,
   formatterForSuiteStarting,
-  getTopOfClass,
+  getTopOfClass
 }
 import org.scalatest.events._
 import org.scalatest.tools.StandardOutReporter
@@ -34,7 +34,7 @@ trait ScriptedScalaTestSuite extends Suite {
       durations: Boolean = false,
       shortstacks: Boolean = false,
       fullstacks: Boolean = false,
-      stats: Boolean = false,
+      stats: Boolean = false
   ): Status = {
     requireNonNull(configMap)
     val SelectedTag = "Selected"
@@ -63,9 +63,9 @@ trait ScriptedScalaTestSuite extends Suite {
           false,
           false,
           false,
-          false,
-        ),
-      ),
+          false
+        )
+      )
     )
     val tracker = new Tracker
     val filter =
@@ -76,13 +76,17 @@ trait ScriptedScalaTestSuite extends Suite {
         Filter(
           tagsToInclude = Some(SelectedSet),
           excludeNestedSuites = true,
-          dynaTags = DynaTags(Map.empty, Map(suiteId -> taggedTests)),
+          dynaTags = DynaTags(Map.empty, Map(suiteId -> taggedTests))
         )
       }
     val runStartTime = System.currentTimeMillis
     if (stats)
       dispatch(
-        RunStarting(tracker.nextOrdinal(), expectedTestCount(filter), configMap),
+        RunStarting(
+          tracker.nextOrdinal(),
+          expectedTestCount(filter),
+          configMap
+        )
       )
 
     val suiteStartTime = System.currentTimeMillis
@@ -105,8 +109,8 @@ trait ScriptedScalaTestSuite extends Suite {
           Some(e),
           Some(duration),
           formatter,
-          Some(SeeStackDepthException),
-        ),
+          Some(SeeStackDepthException)
+        )
       )
     }
 
@@ -120,8 +124,8 @@ trait ScriptedScalaTestSuite extends Suite {
           thisSuite.suiteId,
           Some(thisSuite.getClass.getName),
           formatter,
-          Some(getTopOfClass(thisSuite)),
-        ),
+          Some(getTopOfClass(thisSuite))
+        )
       )
 
       val status =
@@ -134,8 +138,8 @@ trait ScriptedScalaTestSuite extends Suite {
             configMap,
             None,
             tracker,
-            Set.empty,
-          ),
+            Set.empty
+          )
         )
       status.waitUntilCompleted()
       val suiteCompletedFormatter = formatterForSuiteCompleted(thisSuite)
@@ -148,8 +152,8 @@ trait ScriptedScalaTestSuite extends Suite {
           Some(thisSuite.getClass.getName),
           Some(duration),
           suiteCompletedFormatter,
-          Some(getTopOfClass(thisSuite)),
-        ),
+          Some(getTopOfClass(thisSuite))
+        )
       )
       if (stats) {
         val duration = System.currentTimeMillis - runStartTime
@@ -164,8 +168,8 @@ trait ScriptedScalaTestSuite extends Suite {
             tracker.nextOrdinal(),
             Resources.cannotInstantiateSuite(e.getMessage),
             Some(e),
-            Some(System.currentTimeMillis - runStartTime),
-          ),
+            Some(System.currentTimeMillis - runStartTime)
+          )
         )
         FailedStatus
       case e: IllegalAccessException =>
@@ -175,8 +179,8 @@ trait ScriptedScalaTestSuite extends Suite {
             tracker.nextOrdinal(),
             Resources.cannotInstantiateSuite(e.getMessage),
             Some(e),
-            Some(System.currentTimeMillis - runStartTime),
-          ),
+            Some(System.currentTimeMillis - runStartTime)
+          )
         )
         FailedStatus
       case e: NoClassDefFoundError =>
@@ -186,8 +190,8 @@ trait ScriptedScalaTestSuite extends Suite {
             tracker.nextOrdinal(),
             Resources.cannotLoadClass(e.getMessage),
             Some(e),
-            Some(System.currentTimeMillis - runStartTime),
-          ),
+            Some(System.currentTimeMillis - runStartTime)
+          )
         )
         FailedStatus
       case e: Throwable =>
@@ -197,8 +201,8 @@ trait ScriptedScalaTestSuite extends Suite {
             tracker.nextOrdinal(),
             Resources.bigProblems(e),
             Some(e),
-            Some(System.currentTimeMillis - runStartTime),
-          ),
+            Some(System.currentTimeMillis - runStartTime)
+          )
         )
         if (!NonFatal(e))
           throw e
