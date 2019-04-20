@@ -13,6 +13,10 @@ scmInfo := Some(ScmInfo(
   "git@github.com:daniel-shuy/scripted-scalatest-sbt-plugin.git"
 ))
 
+developers := List(
+  Developer("daniel-shuy", "Daniel Shuy", "daniel_shuy@hotmail.com", url("https://github.com/daniel-shuy")),
+)
+
 crossSbtVersions := Seq(
   "0.13.17",
   "1.2.6"
