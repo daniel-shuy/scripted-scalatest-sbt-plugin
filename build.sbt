@@ -8,6 +8,11 @@ licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/lice
 
 homepage := Some(url("https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin"))
 
+scmInfo := Some(ScmInfo(
+  url("https://github.com/daniel-shuy/scripted-scalatest-sbt-plugin"),
+  "git@github.com:daniel-shuy/scripted-scalatest-sbt-plugin.git"
+))
+
 crossSbtVersions := Seq(
   "0.13.17",
   "1.2.6"
