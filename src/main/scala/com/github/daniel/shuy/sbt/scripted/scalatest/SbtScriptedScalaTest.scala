@@ -61,7 +61,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
           )
           status.waitUntilCompleted()
           if (!status.succeeds()) {
-            sys.error(s"Scripted ScalaTest suite failed!")
+            sys.error("Scripted ScalaTest suite failed!")
           }
         case None =>
           logger.value.warn(
