@@ -1,6 +1,6 @@
 package com.github.daniel.shuy.sbt.scripted.scalatest
 
-import org.scalatest.Suite
+import org.scalatest.{ScriptedScalaTestSuite, Suite}
 import sbt._
 import sbt.Keys.streams
 
@@ -51,18 +51,7 @@ object SbtScriptedScalaTest extends AutoPlugin {
     scriptedScalaTest := {
       // do nothing if not configured
       scriptedScalaTestSpec.value match {
-        case Some(suite) =>
-          val stacks = scriptedScalaTestStacks.value
-          val status = suite.executeScripted(
-            durations = scriptedScalaTestDurations.value,
-            shortstacks = stacks.shortstacks,
-            fullstacks = stacks.fullstacks,
-            stats = scriptedScalaTestStats.value
-          )
-          status.waitUntilCompleted()
-          if (!status.succeeds()) {
-            sys.error("Scripted ScalaTest suite failed!")
-          }
+        case Some(suite) => executeScriptedTestsTask(suite)
         case None =>
           logger.value.warn(
             s"${scriptedScalaTestSpec.key.label} not configured, no tests will be run..."
@@ -70,4 +59,20 @@ object SbtScriptedScalaTest extends AutoPlugin {
       }
     }
   )
+
+  private[this] def executeScriptedTestsTask(
+      suite: ScriptedScalaTestSuite
+  ): Unit = Def.task {
+    val stacks = scriptedScalaTestStacks.value
+    val status = suite.executeScripted(
+      durations = scriptedScalaTestDurations.value,
+      shortstacks = stacks.shortstacks,
+      fullstacks = stacks.fullstacks,
+      stats = scriptedScalaTestStats.value
+    )
+    status.waitUntilCompleted()
+    if (!status.succeeds()) {
+      sys.error("Scripted ScalaTest suite failed!")
+    }
+  }
 }
