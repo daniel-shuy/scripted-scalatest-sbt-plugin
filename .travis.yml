@@ -13,11 +13,11 @@ jdk: openjdk8
 
 jobs:
   include:
-    - name: test
+    - stage: test
       if: (NOT branch =~ /^release\/.*$/)
       # When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
       script: sbt "^ publishLocal" "^ scripted"
-    - name: release
+    - stage: release
       if: (branch =~ /^release\/.*$/)
       env:
         - BINTRAY_USER=daniel-shuy
