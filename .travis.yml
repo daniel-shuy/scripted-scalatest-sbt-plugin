@@ -5,8 +5,8 @@ sudo: false
 
 language: scala
 
-# Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
-dist: trusty
+# Ubuntu Bionic (https://docs.travis-ci.com/user/reference/bionic/)
+dist: bionic
 
 # https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html#running-versus-compiling
 jdk: openjdk8
@@ -19,6 +19,10 @@ jobs:
       script: sbt "^ publishLocal" "scripted"
     - stage: release
       if: (branch =~ /^release\/.*$/)
+      addons:
+        apt:
+          packages:
+            - git-flow
       env:
         - BINTRAY_USER=daniel-shuy
         # BINTRAY_PASS
@@ -28,12 +32,6 @@ jobs:
         # Extract release version from branch name
         - RELEASE_VERSION=`echo $TRAVIS_BRANCH | sed --regexp-extended 's/^release\/(.*)$/\1/'`
         - GIT_MERGE_AUTOEDIT=no
-      before_install:
-        # git-flow AVH (https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Linux,-Unix,-etc.#user-content-ubuntu)
-        - sudo add-apt-repository --yes ppa:pdoes/gitflow-avh
-        # use add-apt-repository --update in Ubuntu 17+ (Artful)
-        - sudo apt-get update
-        - sudo apt-get --yes install git-flow
       install:
         - git remote set-url origin https://$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
         - git remote set-branches --add origin master
