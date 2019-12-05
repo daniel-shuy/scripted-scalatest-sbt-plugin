@@ -36,5 +36,5 @@ crossSbtVersions := Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.0"
+  "org.scalatest" %% "scalatest" % "3.1.0"
 )
