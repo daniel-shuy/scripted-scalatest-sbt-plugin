@@ -63,6 +63,7 @@ trait ScriptedScalaTestSuite extends Suite {
           false,
           false,
           false,
+          false,
           false
         )
       )
