@@ -1,6 +1,6 @@
 import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
 import org.scalatest.Assertions._
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 lazy val testBasicSimple = project
   .in(file("."))
@@ -8,7 +8,7 @@ lazy val testBasicSimple = project
     name := "test/basic/simple",
 
     scriptedScalaTestStacks := SbtScriptedScalaTest.FullStacks,
-    scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
+    scriptedScalaTestSpec := Some(new AnyWordSpec with ScriptedScalaTestSuiteMixin {
       override val sbtState: State = state.value
 
       "scripted test" should {

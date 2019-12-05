@@ -8,13 +8,16 @@ language: scala
 # Ubuntu Trusty (https://docs.travis-ci.com/user/reference/trusty/)
 dist: trusty
 
+# https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html#running-versus-compiling
+jdk: openjdk8
+
 jobs:
   include:
-    - name: test
+    - stage: test
       if: (NOT branch =~ /^release\/.*$/)
       # When running scripted tests targeting multiple SBT versions, we must first publish locally for all SBT versions
-      script: sbt "^ publishLocal" "^ scripted"
-    - name: release
+      script: sbt "^ publishLocal" "scripted"
+    - stage: release
       if: (branch =~ /^release\/.*$/)
       env:
         - BINTRAY_USER=daniel-shuy
