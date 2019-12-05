@@ -9,7 +9,8 @@
 
 | Plugin Version | SBT Version   | ScalaTest Version |
 | -------------- | ------------- | ----------------- |
-| 1.x.x          | 0.13.x, 1.x.x | 3.x.x             |
+| 1.x.x          | 0.13.x, 1.x.x | 3.0.x             |
+| 2.x.x          | 0.13.x, 1.x.x | 3.1.x+            |
 
 A SBT plugin to use [ScalaTest](http://www.scalatest.org/) with scripted-plugin to test your SBT plugins
 
@@ -147,7 +148,7 @@ Using SBT's Example in <http://www.scala-sbt.org/0.13/docs/Testing-sbt-plugins.h
 ```scala
 import com.github.daniel.shuy.sbt.scripted.scalatest.ScriptedScalaTestSuiteMixin
 import org.scalatest.Assertions._
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 lazy val root = (project in file("."))
   .settings(
@@ -155,7 +156,7 @@ lazy val root = (project in file("."))
     scalaVersion := "2.10.6",
     assemblyJarName in assembly := "foo.jar",
 
-    scriptedScalaTestSpec := Some(new WordSpec with ScriptedScalaTestSuiteMixin {
+    scriptedScalaTestSpec := Some(new AnyWordSpec with ScriptedScalaTestSuiteMixin {
       override val sbtState: State = state.value
 
       "assembly" should {
