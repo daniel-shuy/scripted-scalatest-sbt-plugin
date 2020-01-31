@@ -32,7 +32,7 @@ developers := List(
 
 crossSbtVersions := Seq(
   "0.13.17",
-  "1.3.3"
+  "1.2.6"
 )
 
 libraryDependencies ++= Seq(
