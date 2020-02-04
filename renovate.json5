@@ -1,19 +1,21 @@
 {
-  "extends": [
-    "config:base"
+  extends: [
+    "config:base",
   ],
-  "ignoreDeps": [
-    "org.scalatest:scalatest"
+  ignoreDeps: [
+    "org.scalatest:scalatest",
   ],
-  "rebaseStalePrs": true,
-  "automerge": true,
-  "major": {
-    "automerge": false
+  rebaseStalePrs: true,
+  automerge: true,
+  major: {
+    automerge: false,
   },
-  "packageRules": [{
-    "packageNames": [
-      "org.scalameta:sbt-scalafmt"
-    ],
-    "automerge": false
-  }]
+  packageRules: [
+    {
+      packageNames: [
+        "org.scalameta:sbt-scalafmt",
+      ],
+      automerge: false,
+    },
+  ],
 }
