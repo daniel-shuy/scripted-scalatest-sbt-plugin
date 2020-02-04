@@ -16,6 +16,9 @@
         "org.scalameta:sbt-scalafmt",
       ],
       automerge: false,
+      prBodyNotes: [
+        ":warning: .scalafmt.conf must be updated manually",
+      ],
     },
   ],
 }
