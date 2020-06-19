@@ -2,15 +2,22 @@
   extends: [
     "config:base",
   ],
-  ignoreDeps: [
-    "org.scalatest:scalatest",
-  ],
   rebaseStalePrs: true,
   automerge: true,
   major: {
     automerge: false,
   },
   packageRules: [
+    {
+      packageNames: [
+        "org.scalatest:scalatest",
+      ],
+      updateTypes: [
+        "minor",
+        "patch",
+      ],
+      enabled: false,
+    },
     {
       packageNames: [
         "org.scalameta:sbt-scalafmt",
