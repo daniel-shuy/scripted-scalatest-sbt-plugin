@@ -4,6 +4,7 @@
   ],
   rebaseWhen: "behind-base-branch",
   prCreation: "not-pending",
+  dependencyDashboard: true,
   automerge: true,
   major: {
     automerge: false,
