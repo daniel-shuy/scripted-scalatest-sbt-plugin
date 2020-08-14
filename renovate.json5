@@ -1,0 +1,33 @@
+{
+  extends: [
+    "config:base",
+  ],
+  rebaseWhen: "behind-base-branch",
+  prCreation: "not-pending",
+  dependencyDashboard: true,
+  automerge: true,
+  major: {
+    automerge: false,
+  },
+  packageRules: [
+    {
+      packageNames: [
+        "org.scalatest:scalatest",
+      ],
+      updateTypes: [
+        "minor",
+        "patch",
+      ],
+      enabled: false,
+    },
+    {
+      packageNames: [
+        "org.scalameta:sbt-scalafmt",
+      ],
+      automerge: false,
+      prBodyNotes: [
+        ":warning: .scalafmt.conf must be updated manually",
+      ],
+    },
+  ],
+}
